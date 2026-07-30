@@ -4,10 +4,15 @@ A micro-task data entry platform. Workers claim a scanned PDF, transcribe it int
 spreadsheet offline, upload the result, and get paid in US dollars through Whish
 Money or cash once an admin approves it.
 
+![The Sortifya landing page: the headline "Turn messy PDFs into clean Excel data and earn real cash" beside a live panel showing a scanned document resolving into an aligned spreadsheet](docs/landing.png)
+
 ```
 Landing page → register → claim a PDF → type it into Excel → upload
             → admin review → ledger credit → withdraw at $10
 ```
+
+<sub>Figures in the screenshot come from the seeded demo data — a fresh clone
+shows its own.</sub>
 
 ---
 
