@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   Sortifya base layer
+   The product turns unstructured ink into an aligned grid, so the
+   surface language is: hairline rules, cell geometry, mono figures.
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-mist-50 font-sans text-slate-700 antialiased dark:bg-ink-950 dark:text-slate-300;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Arabic has no usable cut in Sora or Instrument Sans — swap the
+       entire stack rather than letting the browser fall back per-glyph. */
+    [dir='rtl'] body,
+    [dir='rtl'] .font-display,
+    [dir='rtl'] .font-sans {
+        @apply font-arabic;
+    }
+
+    /* Figures stay mono in both directions: money must never reflow. */
+    [dir='rtl'] .font-mono {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        direction: ltr;
+        unicode-bidi: embed;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-display tracking-tightest text-slate-900 dark:text-white;
+    }
+
+    /* Quality floor: a keyboard user must always see where they are. */
+    :focus-visible {
+        @apply outline-none ring-2 ring-emerald-500 ring-offset-2 ring-offset-mist-50 dark:ring-offset-ink-950;
+    }
+
+    ::selection {
+        @apply bg-emerald-500/25 text-slate-900 dark:text-white;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply rounded-full border-2 border-solid border-transparent bg-slate-300 bg-clip-content dark:bg-slate-700;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-slate-400 dark:bg-slate-600;
+    }
+}
+
+@layer components {
+    /* The one surface primitive. Everything raised uses this. */
+    .panel {
+        @apply rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-ink-850/70;
+    }
+
+    .panel-hover {
+        @apply transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-glow;
+    }
+
+    /* Spreadsheet column/row reference. Structure that encodes the subject. */
+    .cell-ref {
+        @apply inline-flex h-6 items-center rounded-md border border-slate-200 bg-slate-100 px-1.5 font-mono text-[11px]
+            font-medium uppercase tracking-widest text-slate-500 dark:border-slate-800 dark:bg-ink-800 dark:text-slate-500;
+    }
+
+    .btn {
+        @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold
+            transition-all duration-200 disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply btn bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/20
+            hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/30 active:translate-y-0;
+    }
+
+    .btn-ghost {
+        @apply btn border border-slate-200 bg-white/60 text-slate-700 hover:border-slate-300 hover:bg-white
+            dark:border-slate-800 dark:bg-ink-850/60 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-ink-800;
+    }
+
+    .btn-danger {
+        @apply btn border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100
+            dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-950/70;
+    }
+
+    .field {
+        @apply w-full rounded-xl border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm
+            transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30
+            dark:border-slate-800 dark:bg-ink-850 dark:text-white dark:placeholder:text-slate-600;
+    }
+
+    .label {
+        @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+    }
+
+    /* Status vocabulary — one chip, four meanings. Amber is reserved
+       strictly for "waiting on someone", never for decoration. */
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] font-medium
+            uppercase tracking-wider;
+    }
+
+    .chip-ok {
+        @apply chip border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400;
+    }
+
+    .chip-wait {
+        @apply chip border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400;
+    }
+
+    .chip-bad {
+        @apply chip border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400;
+    }
+
+    .chip-mute {
+        @apply chip border-slate-300 bg-slate-100 text-slate-500 dark:border-slate-700 dark:bg-ink-800 dark:text-slate-400;
+    }
+
+    .gradient-text {
+        @apply bg-gradient-to-r from-emerald-500 to-teal-400 bg-clip-text text-transparent;
+    }
+
+    /* Ambient light source. Sits behind panels, never in front. */
+    .ambient {
+        @apply pointer-events-none absolute -z-10 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-3xl;
+    }
+
+    .rule {
+        @apply border-slate-200 dark:border-slate-800;
+    }
+}
+
+@layer utilities {
+    .numeric {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .cell-grid {
+        @apply bg-grid-light bg-cell dark:bg-grid-dark;
+    }
+
+    /* Flips a directional glyph (arrows, chevrons) under RTL.
+       Written as a plain declaration rather than `@apply rtl:-scale-x-100`:
+       that route only sets --tw-scale-x and relies on Tailwind's composed
+       transform chain, which resolves to `none` on these inline SVGs. */
+    [dir='rtl'] .flip-rtl {
+        transform: scaleX(-1);
+    }
+}
+
+/* AOS is loaded globally; neutralise it (and every local animation)
+   for users who asked the OS not to animate. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

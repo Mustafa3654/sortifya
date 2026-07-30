@@ -1,0 +1,33 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+
+# Filament publishes these into public/ and `composer install` re-runs
+# `filament:upgrade`, so they are vendor output rather than source. Tracking
+# them adds ~1.6 MB and produces a merge conflict on every Filament bump.
+/public/css/filament
+/public/js/filament
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# Worker uploads and seeded task PDFs live under storage/app, which Laravel's
+# own .gitignore files already exclude. Nothing to add here — noted so nobody
+# "helpfully" commits a submission later.
