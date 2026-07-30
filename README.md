@@ -51,6 +51,27 @@ composer dev
 That starts the web server, the task scheduler, and Vite together on
 <http://localhost:8000>.
 
+### Serving it from XAMPP's Apache instead
+
+Dropping the project in `htdocs` puts it in a **subdirectory**, which changes
+two settings. Point both at the public folder:
+
+```dotenv
+APP_URL=http://localhost/sortifya/public
+ASSET_URL=http://localhost/sortifya/public
+```
+
+Then `php artisan optimize:clear`.
+
+`ASSET_URL` is not optional here. Without it Livewire emits a root-relative
+`/livewire/livewire.js`, which 404s anywhere but the domain root — and because
+Filament's admin UI is Alpine-driven, a missing Livewire renders `/admin` as a
+**blank page** with the HTML fully present behind it.
+
+Cleaner still is a virtual host pointing `DocumentRoot` at `.../sortifya/public`,
+which puts the app at a domain root and lets both settings stay at their
+defaults.
+
 ### Seeded accounts
 
 | Role | Email | Password |

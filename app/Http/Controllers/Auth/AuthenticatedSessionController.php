@@ -56,8 +56,12 @@ class AuthenticatedSessionController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
+        // Named route rather than a literal "/admin", which would 404 whenever
+        // the app is served from a subdirectory (the norm under XAMPP).
         return redirect()->intended(
-            Auth::user()->isAdmin() ? '/admin' : route('dashboard')
+            Auth::user()->isAdmin()
+                ? route('filament.admin.pages.dashboard')
+                : route('dashboard')
         );
     }
 

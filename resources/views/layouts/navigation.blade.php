@@ -191,7 +191,10 @@
                             @endforeach
 
                             @if (auth()->user()->isAdmin())
-                                <a href="/admin"
+                                {{-- Named route, not a literal "/admin": a root-relative
+                                     path 404s whenever the app is served from a
+                                     subdirectory, which is the norm under XAMPP. --}}
+                                <a href="{{ route('filament.admin.pages.dashboard') }}"
                                    class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-amber-600 transition-colors
                                           hover:bg-amber-500/10 dark:text-amber-400">
                                     <x-lucide name="shield-check" :size="16" />
