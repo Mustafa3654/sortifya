@@ -257,6 +257,114 @@ spreadsheet row references (`R1/R2/R3`) because the content genuinely is a seque
 
 ---
 
+## Going to production
+
+### Do this first
+
+**Never run `db:seed` on a live database.** The seeder creates
+`admin@sortifya.com` with the password `password123` and two worker accounts on
+the same one. They exist so a fresh clone is explorable; on a public host they
+are a full admin takeover. Migrate without seeding and create the first admin by
+hand:
+
+```bash
+php artisan migrate --force
+php artisan tinker --execute="App\Models\User::create(['name'=>'You','email'=>'you@example.com','password'=>'a-real-password','role'=>App\Enums\UserRole::Admin,'is_active'=>true]);"
+```
+
+If you already seeded, change all three passwords or delete the accounts.
+
+### Serve `public/`, and nothing above it
+
+The single most damaging misconfiguration, and the default XAMPP layout walks
+straight into it. With the project at `htdocs/sortifya` and `DocumentRoot` at
+`htdocs`, Apache serves the **whole project directory**: `.env` with your
+`APP_KEY` and database password, `storage/logs`, `composer.lock`, the lot — all
+readable at `http://host/sortifya/.env`. Expose that host through a tunnel or
+put it on the internet and those credentials are public.
+
+Point `DocumentRoot` (or a vhost) at `.../sortifya/public` so nothing else is
+reachable in the first place:
+
+```apache
+<VirtualHost *:80>
+    DocumentRoot "D:/xampp/htdocs/sortifya/public"
+    <Directory "D:/xampp/htdocs/sortifya/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Until you do, the repo ships a root `.htaccess` that denies everything above
+`public/` as a seatbelt. Check it is actually in force — `AllowOverride None`
+silently disables it:
+
+```bash
+curl -o /dev/null -w '%{http_code}\n' http://your-host/sortifya/.env   # want 403
+```
+
+**If that ever returned 200 on a reachable host, treat the key as leaked**: run
+`php artisan key:generate` (this signs everyone out) and change the database
+password.
+
+### Environment
+
+```dotenv
+APP_ENV=production
+APP_DEBUG=false          # stack traces expose env values and file paths
+APP_URL=https://your-domain
+ASSET_URL=               # empty at a domain root; the base path in a subdirectory
+```
+
+`APP_KEY` must be set (`php artisan key:generate`) and must not change
+afterwards — sessions and every encrypted value are tied to it.
+
+### Cache and build
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci && npm run build
+php artisan optimize          # config + routes + views
+php artisan storage:link
+```
+
+Re-run `php artisan optimize` after any `.env` change — cached config ignores the
+file until you do.
+
+### The scheduler is load-bearing
+
+Task holds expire but nothing releases them without the scheduler, so a crashed
+cron quietly drains the queue: every claimed-and-abandoned task stays locked
+forever and workers see an empty board.
+
+```bash
+* * * * * cd /path/to/sortifya && php artisan schedule:run >> /dev/null 2>&1
+```
+
+`QUEUE_CONNECTION=database` is the default, so run a worker if you queue mail:
+
+```bash
+php artisan queue:work --tries=3
+```
+
+Keep both under supervisor or systemd so they restart on failure.
+
+### Before you take real money
+
+- **Back up `transactions`.** It is the only record of what you owe — balances
+  are derived from it and nothing else. Restoring everything except this table
+  means every worker's balance silently resets to zero.
+- Set `TELEGRAM_WEBHOOK_SECRET` if you use the payout bot. Without it the
+  webhook returns 403, which is safe; with a *guessable* one, anyone who finds
+  the URL can approve payouts.
+- Verify `storage/app/private/` is not reachable over HTTP. Submissions are
+  streamed through an authorising controller, and that is the only route in.
+- Send one real password reset. Brevo silently drops mail from an unverified
+  sender domain, and the failure surfaces as "the link never arrived".
+
+---
+
 ## Tests
 
 ```bash
@@ -299,3 +407,9 @@ mysql -u root -e "CREATE DATABASE sortifya_db_test CHARACTER SET utf8mb4 COLLATE
   set; do not hand-edit it.
 - The Blade icon component is `<x-lucide name="…" />`, not `<x-icon>` — Filament's
   `blade-icons` dependency already registers a global `<x-icon>`.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).

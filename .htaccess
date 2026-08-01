@@ -1,0 +1,27 @@
+# Nothing above public/ is web content.
+#
+# Only public/ is meant to be served. When the project sits inside a document
+# root — the usual XAMPP layout, htdocs/sortifya with DocumentRoot at htdocs —
+# Apache will otherwise happily serve .env, composer.lock, storage/logs and
+# the whole vendor tree at /sortifya/<file>.
+#
+# public/.htaccess grants itself back with "Require all granted", so the app
+# keeps working while everything beside it stays closed.
+#
+# This is a seatbelt, not the fix. The fix is a DocumentRoot (or vhost)
+# pointing directly at .../sortifya/public, which makes these files
+# unreachable no matter what Apache is configured to allow.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
+
+# Never advertise a directory listing, even where access is granted.
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
