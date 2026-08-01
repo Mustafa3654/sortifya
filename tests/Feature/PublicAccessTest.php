@@ -22,7 +22,7 @@ class PublicAccessTest extends TestCase
         // a 302. An earlier version compared against a hardcoded login URL,
         // which passed vacuously as soon as APP_URL changed.
         $response->assertOk();
-        $response->assertSee('Turn messy PDFs into', false);
+        $response->assertSee('Turn unstructured data into', false);
     }
 
     public function test_the_landing_page_lists_open_tasks_to_a_guest(): void

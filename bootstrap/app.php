@@ -23,6 +23,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'active' => EnsureUserIsActive::class,
         ]);
+
+        // ngrok (and any TLS-terminating proxy) forwards the request to Apache
+        // as plain HTTP. Without this Laravel builds http:// URLs on an https://
+        // page, which browsers then block as mixed content.
+        //
+        // '*' is right for a tunnel or a single-host deployment. Behind a real
+        // load balancer, narrow this to its addresses.
+        $middleware->trustProxies(at: '*');
     })
     ->withSchedule(function (Schedule $schedule) {
         // Holds are 45 minutes; sweeping every 5 keeps the queue honest

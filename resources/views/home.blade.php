@@ -36,7 +36,11 @@
                         {{ __('sortifya.home.eyebrow') }}
                     </span>
 
-                    <h1 class="mt-6 text-[2.6rem] font-bold leading-[1.05] sm:text-6xl lg:text-[3.5rem] xl:text-6xl">
+                    {{-- text-balance evens the rag at the narrower breakpoints.
+                         It is a no-op on the widest one, where "unstructured"
+                         nearly fills the column and browsers stop balancing
+                         past a few lines. --}}
+                    <h1 class="mt-6 text-balance text-[2.6rem] font-bold leading-[1.05] sm:text-6xl lg:text-[3.5rem] xl:text-6xl">
                         {{ __('sortifya.home.hero.title_lead') }}
                         <span class="gradient-text">{{ __('sortifya.home.hero.title_accent') }}</span>
                         {{ __('sortifya.home.hero.title_tail') }}

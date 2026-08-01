@@ -4,7 +4,7 @@ A micro-task data entry platform. Workers claim a scanned PDF, transcribe it int
 spreadsheet offline, upload the result, and get paid in US dollars through Whish
 Money or cash once an admin approves it.
 
-![The Sortifya landing page: the headline "Turn messy PDFs into clean Excel data and earn real cash" beside a live panel showing a scanned document resolving into an aligned spreadsheet](docs/landing.png)
+![The Sortifya landing page: the headline "Turn unstructured data into clean Excel sheets and earn real cash" beside a live panel showing a scanned document resolving into an aligned spreadsheet](docs/landing.png)
 
 ```
 Landing page → register → claim a PDF → type it into Excel → upload
@@ -53,12 +53,11 @@ That starts the web server, the task scheduler, and Vite together on
 
 ### Serving it from XAMPP's Apache instead
 
-Dropping the project in `htdocs` puts it in a **subdirectory**, which changes
-two settings. Point both at the public folder:
+Dropping the project in `htdocs` puts it in a **subdirectory**. Set `ASSET_URL`
+to that base path — no scheme, no host:
 
 ```dotenv
-APP_URL=http://localhost/sortifya/public
-ASSET_URL=http://localhost/sortifya/public
+ASSET_URL=/sortifya/public
 ```
 
 Then `php artisan optimize:clear`.
@@ -68,9 +67,26 @@ Then `php artisan optimize:clear`.
 Filament's admin UI is Alpine-driven, a missing Livewire renders `/admin` as a
 **blank page** with the HTML fully present behind it.
 
-Cleaner still is a virtual host pointing `DocumentRoot` at `.../sortifya/public`,
-which puts the app at a domain root and lets both settings stay at their
-defaults.
+Path-only is deliberate: it produces root-relative asset URLs, so one value
+serves `http://localhost`, an `https` tunnel, and any domain you point at the
+app later.
+
+Cleaner still is a virtual host with `DocumentRoot` at `.../sortifya/public`,
+which puts the app at a domain root and lets `ASSET_URL` stay empty.
+
+### Exposing it through a tunnel (ngrok, Cloudflare, …)
+
+Works with the path-only `ASSET_URL` above and nothing else to change. Set
+`APP_URL` to the public address so password-reset mail links resolve:
+
+```dotenv
+APP_URL=https://your-subdomain.ngrok-free.dev/sortifya/public
+```
+
+The app trusts proxy headers (`bootstrap/app.php`), so it sees the request as
+HTTPS even though the tunnel forwards plain HTTP to Apache. Without that, every
+generated URL would come back `http://` on an `https://` page and browsers
+would block it as mixed content.
 
 ### Seeded accounts
 

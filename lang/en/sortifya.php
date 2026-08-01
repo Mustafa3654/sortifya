@@ -39,8 +39,10 @@ return [
         'eyebrow' => 'Micro-task data entry',
 
         'hero' => [
-            'title_lead' => 'Turn messy PDFs into',
-            'title_accent' => 'clean Excel data',
+            'title_lead' => 'Turn unstructured data into',
+            // "clean Excel data" would repeat "data" from the lead line; the
+            // headline says sheets instead, and keeps Excel.
+            'title_accent' => 'clean Excel sheets',
             'title_tail' => 'and earn real cash.',
             'body' => 'Claim a scanned document, type it into a spreadsheet the way you already know how, and upload it. Approved work is credited in US dollars and paid out through Whish Money or cash.',
             'cta_primary' => 'Claim your first task',
