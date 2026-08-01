@@ -14,6 +14,10 @@ return [
         'home' => 'Home',
         'how' => 'How it works',
         'tasks' => 'Open tasks',
+        'faq' => 'FAQ',
+        'contact' => 'Contact',
+        'terms' => 'Terms',
+        'privacy' => 'Privacy',
         'dashboard' => 'Dashboard',
         'wallet' => 'Wallet',
         'sign_in' => 'Sign in',
@@ -119,6 +123,7 @@ return [
         'blurb' => 'A micro-task platform for turning scanned documents into clean, structured spreadsheets.',
         'navigate' => 'Navigate',
         'account' => 'Account',
+        'support' => 'Support',
         'rights' => 'All rights reserved.',
         'built' => 'Built for careful typists.',
     ],
@@ -333,6 +338,266 @@ return [
         'optional' => 'Optional',
         'loading' => 'Loading',
         'copyright' => '© :year Sortifya.',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supporting pages
+    |--------------------------------------------------------------------------
+    |
+    | The terms and privacy copy below describes how this platform actually
+    | behaves — hold times, the review loop, the payout floor, what is stored
+    | and for how long. It is written to be accurate, not to be legal advice.
+    | Have a lawyer in your jurisdiction read it before you rely on it, and
+    | fill in config('sortifya.company') so it names a real entity.
+    |
+    */
+
+    'pages' => [
+
+        'faq' => [
+            'eyebrow' => 'Questions',
+            'title' => 'Questions people ask before starting',
+            'body' => 'If your question is not here, write to us — a person answers.',
+            'still_stuck' => 'Still not sure about something?',
+            'contact_cta' => 'Ask us directly',
+
+            'groups' => [
+                [
+                    'heading' => 'Getting started',
+                    'items' => [
+                        [
+                            'q' => 'What is Sortifya, in one sentence?',
+                            'a' => 'You take a scanned document, type what it says into a spreadsheet, upload the spreadsheet, and get paid once someone checks it.',
+                        ],
+                        [
+                            'q' => 'What do I need to start?',
+                            'a' => "A computer and any spreadsheet program — Excel, Numbers, or the free Google Sheets. Nothing else, and there is nothing to install.\n\nA phone technically works but is slow going; these tasks involve a lot of typing.",
+                        ],
+                        [
+                            'q' => 'Does it cost anything to join?',
+                            'a' => 'No. Signing up is free, and we never ask you to pay for tasks, training, or withdrawals. If anyone asks you to pay to work here, it is not us.',
+                        ],
+                        [
+                            'q' => 'Do I need experience?',
+                            'a' => 'No. If you can read a document and type what it says into the right column, you can do every task on the platform. Most tasks include a template so the columns are already laid out for you.',
+                        ],
+                    ],
+                ],
+                [
+                    'heading' => 'Doing the work',
+                    'items' => [
+                        [
+                            'q' => 'How long do I have once I claim a task?',
+                            'a' => 'Forty-five minutes. The task is locked to you for that time so nobody else can take it while you work. The countdown is on screen the whole time.',
+                        ],
+                        [
+                            'q' => 'What if I cannot finish in time?',
+                            'a' => "The task returns to the open list and someone else can claim it. Nothing is held against you, and you can claim it again if it is still there.\n\nIf you know you will not finish, use “Return to queue” so it goes back straight away.",
+                        ],
+                        [
+                            'q' => 'Can I work on several tasks at once?',
+                            'a' => 'No — one at a time. It keeps the queue moving and stops tasks being locked up by someone who is not working on them.',
+                        ],
+                        [
+                            'q' => 'What file should I upload?',
+                            'a' => 'An .xlsx, .xls, or .csv file, up to 10 MB. If the task came with a template, fill in that file and send it back.',
+                        ],
+                        [
+                            'q' => 'Something in the document is unreadable. What do I do?',
+                            'a' => 'Leave that cell empty rather than guessing. A blank cell is easy to fix later; a wrong number that looks right is not, and guessing is the most common reason work gets returned.',
+                        ],
+                    ],
+                ],
+                [
+                    'heading' => 'Getting paid',
+                    'items' => [
+                        [
+                            'q' => 'How much can I earn?',
+                            'a' => "Each task pays between \$0.50 and \$2.00, shown on the task before you claim it. What you earn in a day depends on how many tasks are posted and how quickly you work.\n\nWe would rather be straight with you than quote a number we cannot promise: this is paid piece work, not a salary.",
+                        ],
+                        [
+                            'q' => 'When does the money reach my balance?',
+                            'a' => 'When your upload is approved. Review usually takes under a day. Until then it shows on your dashboard as awaiting review.',
+                        ],
+                        [
+                            'q' => 'When can I withdraw?',
+                            'a' => 'Once your balance reaches $10.00. You can leave it to build up past that if you prefer.',
+                        ],
+                        [
+                            'q' => 'How is the money sent?',
+                            'a' => 'Whish Money or cash. You choose when you request the payout and enter the name and number it should go to.',
+                        ],
+                        [
+                            'q' => 'Why was my work returned?',
+                            'a' => "Whoever reviewed it writes the reason, and you see it word for word on your dashboard. Usually it is a missing column, guessed values, or amounts typed with currency symbols when the task asked for plain numbers.\n\nA returned task comes back to you to fix. Nothing is deducted — the reward simply is not paid until it passes.",
+                        ],
+                        [
+                            'q' => 'A payout was declined. Where is my money?',
+                            'a' => 'Back on your balance. A declined payout is refunded in full and both the original request and the refund stay visible in your wallet, so you can always see what happened.',
+                        ],
+                    ],
+                ],
+                [
+                    'heading' => 'Account and privacy',
+                    'items' => [
+                        [
+                            'q' => 'Who can see the files I upload?',
+                            'a' => 'Only you and the people who review submissions. Uploads are stored outside the public part of the site and cannot be reached by a link.',
+                        ],
+                        [
+                            'q' => 'Can I change my phone number or email?',
+                            'a' => 'Yes, on your profile page at any time. Keep the phone number current — it is where Whish Money payouts are sent.',
+                        ],
+                        [
+                            'q' => 'Can I delete my account?',
+                            'a' => 'Write to us and we will close it. Withdraw any remaining balance first, and note that we keep payment records for as long as the law requires even after an account is closed.',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
+        'terms' => [
+            'eyebrow' => 'Legal',
+            'title' => 'Terms of service',
+            'updated' => 'Last updated :date',
+            'intro' => 'These terms describe how Sortifya works, what we owe you, and what we ask of you. Plain language on purpose — if something here is unclear, ask us and we will explain it.',
+            'toc' => 'On this page',
+
+            'sections' => [
+                [
+                    'heading' => 'Who we are',
+                    'body' => "Sortifya is operated by :company, based in :country. You can reach us at :email.\n\nUsing the platform means you accept these terms. If you do not accept them, do not use it.",
+                ],
+                [
+                    'heading' => 'What Sortifya does',
+                    'body' => "We publish documents that need transcribing into spreadsheets. You may claim one, do the work on your own computer, and upload the result. If it is accepted, we credit your balance in US dollars and you can withdraw once you reach the minimum.\n\nYou work for yourself. Nothing here creates employment, and we do not guarantee that any work will be available at a given time.",
+                ],
+                [
+                    'heading' => 'Your account',
+                    'body' => "You need an account to claim tasks. Give accurate details and keep them current — payouts go to the phone number on your account.\n\nOne account per person. Keep your password to yourself; anything done through your account is treated as done by you. Tell us straight away if you think someone else has access.\n\nYou must be old enough to enter a contract where you live.",
+                ],
+                [
+                    'heading' => 'Claiming and completing tasks',
+                    'body' => "Claiming a task locks it to you for the period shown on screen, currently :hold minutes. When that time passes the task returns to the queue whether or not you have finished, and anyone may claim it.\n\nYou may hold :max task at a time. Do the work yourself and do not share task documents with anyone else — they often contain other people's information.",
+                ],
+                [
+                    'heading' => 'Review, approval, and rework',
+                    'body' => "Every upload is reviewed by a person. If it is accurate, we approve it and credit the reward shown on the task at the time you claimed it.\n\nIf it is not, we return it with a written reason and you may correct and resubmit. We do not charge you for returned work and nothing is deducted from your balance — the reward is simply not paid until the work passes.\n\nWe decide whether work meets the standard, and we will always tell you why.",
+                ],
+                [
+                    'heading' => 'Balance and payouts',
+                    'body' => "Your balance is the running total of everything credited to you, less anything paid out. Every movement is recorded in your wallet and you can see the full history at any time.\n\nYou may request a payout once your balance reaches :minimum. Choose Whish Money or cash and give the name and number it should go to. The amount leaves your available balance as soon as you request it, so it cannot be spent twice.\n\nA person reviews every payout. If we decline one, we refund the full amount to your balance and tell you why. We are not responsible for money that cannot be delivered because you gave us the wrong details.\n\nBalances are a record of what we owe you for accepted work. They are not a bank deposit, they earn no interest, and they cannot be transferred to another person.",
+                ],
+                [
+                    'heading' => 'What you must not do',
+                    'body' => "Do not submit work you did not do. Do not use automated tools to claim tasks or generate submissions. Do not open more than one account, and do not share, publish, or keep the contents of task documents once your work is submitted.\n\nDo not attempt to reach parts of the platform that are not meant for you, and do not interfere with its operation.",
+                ],
+                [
+                    'heading' => 'The work you produce',
+                    'body' => "The spreadsheets you produce from our documents belong to us or to our client once accepted, and you agree to that transfer as part of being paid for the work.\n\nThe source documents remain the property of whoever owns them. You are given access only to complete the task.",
+                ],
+                [
+                    'heading' => 'Suspending or closing an account',
+                    'body' => "We may suspend an account that breaks these terms. Where we do, we will say why.\n\nIf we suspend an account for fraud — work you did not do, duplicate accounts, automated submissions — we may withhold the balance connected to that activity. Otherwise, any balance already earned on accepted work remains yours to withdraw.\n\nYou may ask us to close your account at any time. Withdraw your balance first.",
+                ],
+                [
+                    'heading' => 'What we do not promise',
+                    'body' => "We provide the platform as it is. We do not promise that tasks will always be available, that the site will never be down, or that review will always take a particular length of time.\n\nNothing here limits liability that cannot be limited by law. Beyond that, our responsibility to you is limited to the balance owed on your accepted work.",
+                ],
+                [
+                    'heading' => 'Changes to these terms',
+                    'body' => "We may update these terms. When we make a change that affects you materially, we will say so on the platform before it takes effect. Continuing to use Sortifya after that means you accept the updated terms.",
+                ],
+                [
+                    'heading' => 'Governing law',
+                    'body' => "These terms are governed by the laws of :country, and disputes fall to its courts.",
+                ],
+            ],
+        ],
+
+        'privacy' => [
+            'eyebrow' => 'Legal',
+            'title' => 'Privacy',
+            'updated' => 'Last updated :date',
+            'intro' => 'What we collect, why we need it, and what we do not do with it. We collect as little as the platform can work with.',
+            'toc' => 'On this page',
+
+            'sections' => [
+                [
+                    'heading' => 'Who is responsible',
+                    'body' => ":company, based in :country, decides how the information described here is handled. For anything about your data, write to :email.",
+                ],
+                [
+                    'heading' => 'What we collect',
+                    'body' => "**When you register:** your name, email address, and — if you give it — a phone number.\n\n**When you work:** which tasks you claim and when, the spreadsheets you upload, and the outcome of each review.\n\n**When you are paid:** the amount, the method, and the name and number you asked us to send it to.\n\n**When you write to us:** your name, email, message, and the address your request came from, so we can answer and so we can deal with abuse of the form.\n\n**Automatically:** a session cookie that keeps you signed in and a cookie remembering your language. We do not use advertising or tracking cookies, and there is no third-party analytics on this site.",
+                ],
+                [
+                    'heading' => 'Why we hold it',
+                    'body' => "To run your account, hand out and track work, review submissions, calculate what you are owed, pay you, answer your questions, and keep the financial records the law requires us to keep.\n\nWe do not build profiles, and we do not use your information to advertise to you.",
+                ],
+                [
+                    'heading' => 'The files you upload',
+                    'body' => "Uploaded spreadsheets are stored outside the public part of the site. They cannot be reached by guessing a link — every download passes through a check that you are either the person who uploaded it or someone reviewing it.\n\nThe first rows of each upload are copied into our review screen so a reviewer can check the work without opening the file.",
+                ],
+                [
+                    'heading' => 'Who else sees it',
+                    'body' => "Only where the platform cannot work otherwise:\n\n**Our email provider** delivers password resets and replies. They see your email address and the content of those messages.\n\n**Telegram** receives a payout alert — your name, the amount, and the payout details you entered — so an administrator can approve it. This runs only if the operator has enabled it.\n\n**Our hosting provider** stores the database and files.\n\nWe do not sell your information, and we do not share it for anyone else's marketing.",
+                ],
+                [
+                    'heading' => 'How long we keep it',
+                    'body' => "Your account and its history stay while the account is open.\n\nUploaded spreadsheets are kept while the related task and payment records are active.\n\nPayment records are kept for as long as accounting and tax law requires, which is usually several years and continues after an account is closed.\n\nContact messages are kept while we are dealing with them and for a reasonable period afterwards.",
+                ],
+                [
+                    'heading' => 'Your choices',
+                    'body' => "You can see and change your name, email, and phone number on your profile at any time, and your full payment history is always visible in your wallet.\n\nWrite to us to ask for a copy of your information, to correct something, or to close your account. Depending on where you live you may have further rights over your data; tell us what you need and we will do what the law requires.\n\nWe cannot delete records we are legally required to keep, and we will say so plainly if that applies.",
+                ],
+                [
+                    'heading' => 'Security',
+                    'body' => "Passwords are stored hashed and cannot be read by us or recovered — a reset creates a new one. Uploads sit outside the web root and are served only through an access check. Sessions are signed.\n\nNo system is perfectly secure. If a breach affects you, we will tell you.",
+                ],
+                [
+                    'heading' => 'Children',
+                    'body' => 'Sortifya is not for children. Do not register if you are not old enough to enter a contract where you live.',
+                ],
+                [
+                    'heading' => 'Changes',
+                    'body' => 'If we change how we handle your information, we will update this page and change the date at the top.',
+                ],
+            ],
+        ],
+
+        'contact' => [
+            'eyebrow' => 'Contact',
+            'title' => 'Talk to a person',
+            'body' => 'Questions about a task, a payout that has not arrived, or anything else. We read every message.',
+
+            'form_title' => 'Send a message',
+            'name' => 'Your name',
+            'email' => 'Your email',
+            'email_hint' => 'We reply to this address.',
+            'subject' => 'What is it about',
+            'subject_placeholder' => 'A payout that has not arrived',
+            'message' => 'Your message',
+            'message_placeholder' => 'Tell us what happened, and include the task or payout number if you have it.',
+            'submit' => 'Send message',
+
+            'sent' => 'Message sent. We will reply to the address you gave us.',
+            'stored_not_sent' => 'Your message was saved and we will see it, but our mail system did not confirm delivery. If it is urgent, please email us directly.',
+
+            'direct_title' => 'Or reach us directly',
+            'email_label' => 'Email',
+            'phone_label' => 'Phone',
+            'response_title' => 'When to expect a reply',
+            'response_body' => 'Within :hours hours on working days. Payout problems go to the front of the queue.',
+
+            'before_title' => 'Before you write',
+            'before_body' => 'A lot of questions are already answered, and you will get an instant answer there instead of waiting.',
+            'before_cta' => 'Read the FAQ',
+
+            'signed_in_as' => 'Writing as :name',
+        ],
     ],
 
     'profile' => [

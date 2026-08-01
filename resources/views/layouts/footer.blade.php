@@ -14,7 +14,8 @@
              language pills and push the page sideways. --}}
         <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
 
-            <div class="sm:col-span-2 lg:col-span-5">
+            {{-- 4 + 2 + 2 + 2 + 2 = 12. Adding a column means re-checking this. --}}
+            <div class="sm:col-span-2 lg:col-span-4">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5">
                     <x-logo :size="28" />
                     <span class="font-display text-base font-bold tracking-tightest gradient-text">Sortifya</span>
@@ -24,7 +25,7 @@
                 </p>
             </div>
 
-            <div class="lg:col-span-3">
+            <div class="lg:col-span-2">
                 <h2 class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
                     {{ __('sortifya.footer.navigate') }}
                 </h2>
@@ -32,6 +33,18 @@
                     <li><a href="{{ route('home') }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.home') }}</a></li>
                     <li><a href="{{ $onHome ? '#how-it-works' : route('home').'#how-it-works' }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.how') }}</a></li>
                     <li><a href="{{ $onHome ? '#tasks' : route('home').'#tasks' }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.tasks') }}</a></li>
+                    <li><a href="{{ route('faq') }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.faq') }}</a></li>
+                </ul>
+            </div>
+
+            <div class="lg:col-span-2">
+                <h2 class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                    {{ __('sortifya.footer.support') }}
+                </h2>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ route('contact') }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.contact') }}</a></li>
+                    <li><a href="{{ route('terms') }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.terms') }}</a></li>
+                    <li><a href="{{ route('privacy') }}" class="text-slate-600 transition-colors hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400">{{ __('sortifya.nav.privacy') }}</a></li>
                 </ul>
             </div>
 

@@ -34,6 +34,8 @@
                 ['label' => __('sortifya.nav.home'), 'href' => route('home'), 'anchor' => false],
                 ['label' => __('sortifya.nav.how'), 'href' => $onHome ? '#how-it-works' : route('home').'#how-it-works', 'anchor' => true],
                 ['label' => __('sortifya.nav.tasks'), 'href' => $onHome ? '#tasks' : route('home').'#tasks', 'anchor' => true],
+                ['label' => __('sortifya.nav.faq'), 'href' => route('faq'), 'anchor' => false],
+                ['label' => __('sortifya.nav.contact'), 'href' => route('contact'), 'anchor' => false],
             ] as $link)
                 <a href="{{ $link['href'] }}"
                    class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors
@@ -249,6 +251,8 @@
             <a href="{{ route('home') }}" class="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/5">{{ __('sortifya.nav.home') }}</a>
             <a href="{{ $onHome ? '#how-it-works' : route('home').'#how-it-works' }}" x-on:click="mobile = false" class="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/5">{{ __('sortifya.nav.how') }}</a>
             <a href="{{ $onHome ? '#tasks' : route('home').'#tasks' }}" x-on:click="mobile = false" class="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/5">{{ __('sortifya.nav.tasks') }}</a>
+            <a href="{{ route('faq') }}" class="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/5">{{ __('sortifya.nav.faq') }}</a>
+            <a href="{{ route('contact') }}" class="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/5">{{ __('sortifya.nav.contact') }}</a>
 
             @auth
                 <div class="my-1.5 h-px bg-slate-200 dark:bg-slate-800"></div>

@@ -4,9 +4,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WalletController;
@@ -25,6 +27,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('/language/{locale}', LocaleController::class)->name('locale.switch');
+
+/*
+|--------------------------------------------------------------------------
+| Supporting pages
+|--------------------------------------------------------------------------
+|
+| Reachable to anyone, signed in or not. A worker chasing a payout must be
+| able to find the terms and a way to reach a human without an account.
+|
+*/
+
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+Route::get('/terms', [PageController::class, 'terms'])->name('terms');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+
+// Throttled: a public form that sends mail is a spam relay otherwise.
+Route::post('/contact', [ContactController::class, 'send'])
+    ->middleware('throttle:5,10')
+    ->name('contact.send');
 
 /*
 |--------------------------------------------------------------------------

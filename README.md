@@ -350,6 +350,22 @@ php artisan queue:work --tries=3
 
 Keep both under supervisor or systemd so they restart on failure.
 
+### Before you publish the legal pages
+
+`/terms` and `/privacy` describe how this platform actually behaves — the hold
+time, the review loop, the payout floor, what is stored and for how long. They
+are written to be accurate, **not to be legal advice.** Have a lawyer in your
+jurisdiction read them before you rely on them.
+
+They also need to name a real entity, or the opening line reads "Sortifya is
+operated by Sortifya":
+
+```dotenv
+COMPANY_LEGAL_NAME="Your Company SAL"
+COMPANY_COUNTRY=Lebanon
+LEGAL_UPDATED=2026-08-01     # bump whenever you edit either page
+```
+
 ### Before you take real money
 
 - **Back up `transactions`.** It is the only record of what you owe — balances
