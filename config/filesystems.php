@@ -41,7 +41,12 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // Prefer ASSET_URL, which is a bare path in a subdirectory install,
+            // so task PDFs and templates get root-relative links that follow
+            // whatever host is serving the page. Built from APP_URL instead,
+            // a worker on localhost is handed links to the LAN address — or to
+            // a tunnel that is no longer running.
+            'url' => (env('ASSET_URL') ?: env('APP_URL')).'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

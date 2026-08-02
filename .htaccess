@@ -5,23 +5,57 @@
 # Apache will otherwise happily serve .env, composer.lock, storage/logs and
 # the whole vendor tree at /sortifya/<file>.
 #
-# public/.htaccess grants itself back with "Require all granted", so the app
-# keeps working while everything beside it stays closed.
-#
 # This is a seatbelt, not the fix. The fix is a DocumentRoot (or vhost)
 # pointing directly at .../sortifya/public, which makes these files
 # unreachable no matter what Apache is configured to allow.
+#
+# Note on shape: a blanket "Require all denied" here also denies the folder
+# itself, so http://host/sortifya/ answers 403 instead of redirecting to the
+# app — which is the URL people type, and the one they reach it by from
+# another machine. Authorisation is evaluated before DirectoryIndex resolves
+# index.php, so a <Files> exception cannot rescue it. Hence: deny the
+# sensitive things explicitly, and leave the folder itself reachable so
+# index.php can redirect.
 
-<IfModule mod_authz_core.c>
-    Require all denied
+# ── Files: denied at the authorisation stage ──────────────────
+# Dotfiles (.env above all), and the project files that sit beside them.
+<FilesMatch "^(\.|composer\.|package\.json|package-lock\.json|artisan|phpunit\.xml|.*\.config\.js|.*\.md|.*\.lock|.*\.yml|.*\.yaml)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# The one exception: the redirect stub. It emits a Location header pointing at
+# public/ and nothing else.
+<Files "index.php">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Files>
+
+# ── Directories: <Files> cannot match a path, so mod_rewrite does it ──
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Application source, dependencies, and anything written at runtime.
+    RewriteRule ^(app|bootstrap|config|database|docs|lang|node_modules|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+
+    # Belt and braces for dotfiles, in case FilesMatch is bypassed by a
+    # request shape it does not cover.
+    RewriteRule (^|/)\. - [F,L]
 </IfModule>
 
-<IfModule !mod_authz_core.c>
-    Order deny,allow
-    Deny from all
-</IfModule>
-
-# Never advertise a directory listing, even where access is granted.
+# Never advertise a directory listing.
 <IfModule mod_autoindex.c>
     Options -Indexes
 </IfModule>
